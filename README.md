@@ -1,4 +1,4 @@
-# prewritten_algorithms
+# Prewritten Algorithms
 Prewritten algorithms for algorithm competitions.
 
 Algorithms:
