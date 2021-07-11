@@ -34,14 +34,12 @@ int calculate_common_prefix(int a, int b, int size, int position)
             if (b_next >= N)
                 b_next -= N;
 
-
             return size + calculate_common_prefix(a_next, b_next, size / 2, position-1);
         }
 
         size >>= 1;
         position--;
     }
-
 
     return 0;
 }
@@ -172,8 +170,6 @@ int main()
                 position = at_next;
         }
     }
-
-
 
     if (length > 0)
     {
