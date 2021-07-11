@@ -1,5 +1,5 @@
 # Prewritten Algorithms
-Prewritten algorithms for algorithm competitions (competitive programming).
+Prewritten algorithms for competitive programming.
 
 Algorithms:
 
