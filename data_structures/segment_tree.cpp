@@ -15,69 +15,69 @@ using namespace std;
 template<typename T>
 class segment_tree
 {
- std::vector<T> data;
- int n;
+    std::vector<T> data;
+    int n;
 
 public:
 
- segment_tree(int size)
- {
- n = 1;
- while (n <= size*2)
- {
- n *= 2;
- }
+    segment_tree(int size)
+    {
+        n = 1;
+        while (n <= size*2)
+        {
+            n *= 2;
+        }
 
- data.assign(2 * n, 0);
+        data.assign(2 * n, 0);
  }
 
  T get_sum(int i)
  {
- if (i < 0)
- return T();
+     if (i < 0)
+         return T();
 
- return get_sum(0, i);
+     return get_sum(0, i);
  }
 
 
  T get_sum(int l, int r)
  {
- return get_sum(l, r, 1, 0, n - 1);
+     return get_sum(l, r, 1, 0, n - 1);
  }
 
  T get_sum(int l, int r, int vertex, int range_left, int range_right)
  {
- if (l == range_left && r == range_right)
- {
- return data[vertex];
- }
+     if (l == range_left && r == range_right)
+     {
+         return data[vertex];
+     }
 
- T result = T();
+     T result = T();
 
- int new_range_left = range_left + (range_right - range_left) / 2;
- int new_range_right = new_range_left + 1;
+     int new_range_left = range_left + (range_right - range_left) / 2;
+     int new_range_right = new_range_left + 1;
 
- if (l <= new_range_left)
- {
- result += get_sum(l, min(r, new_range_left), vertex * 2, range_left, new_range_left);
- }
- if (r >= new_range_right)
- {
- result += get_sum(max(l, new_range_right), r, vertex * 2 + 1, new_range_right, range_right);
- }
+     if (l <= new_range_left)
+     {
+         result += get_sum(l, min(r, new_range_left), vertex * 2, range_left, new_range_left);
+     }
+     if (r >= new_range_right)
+     {
+          result += get_sum(max(l, new_range_right), r, vertex * 2 + 1, new_range_right, range_right);
+     }
 
- return result;
+     return result;
  }
 
  void update(const T t, int index)
  {
- index += n;
+     index += n;
 
- while (index)
- {
- data[index] += t;
- index /= 2;
- }
+     while (index)
+     {
+         data[index] += t;
+         index /= 2;
+     }
  }
 };
 
@@ -101,8 +101,8 @@ void factorize(const vector<int>& permutation, vector<int>& factorized)
  
  for (int i = 0; i < n; ++i)
  {
- factorized[i] = tree.get_sum(permutation[i] - 1);
- tree.update(-1, permutation[i]);
+     factorized[i] = tree.get_sum(permutation[i] - 1);
+     tree.update(-1, permutation[i]);
  }
 }
 
@@ -113,18 +113,18 @@ int get_statistic(segment_tree<int>& tree, int s, int n)
 
  while (low + 1 < high)
  {
- int middle = (low + high) / 2;
+     int middle = (low + high) / 2;
 
- int amount = tree.get_sum(middle);
+     int amount = tree.get_sum(middle);
 
- if (amount >= s)
- {
- high = middle;
- }
- else
- {
- low = middle;
- }
+     if (amount >= s)
+     {
+         high = middle;
+     }
+     else
+     {
+         low = middle;
+     }
  }
 
  return high;
@@ -142,10 +142,10 @@ int main()
  vector<int> p, q;
 
  for (int i = 0; i < n; ++i)
- p.push_back(readint());
+     p.push_back(readint());
 
  for (int i = 0; i < n; ++i)
- q.push_back(readint());
+     q.push_back(readint());
 
 
  vector<int> factorized_p;
@@ -159,39 +159,39 @@ int main()
  int carry = 0;
  for (int i = n - 1, j = 0; i >= 0; --i, ++j)
  {
- int k = factorized_p[i] + factorized_q[i] + carry;
+    int k = factorized_p[i] + factorized_q[i] + carry;
 
- carry = 0;
+    carry = 0;
 
- while (k > j)
- {
- carry++;
- k -= (j + 1);
- }
+    while (k > j)
+    {
+        carry++;
+        k -= (j + 1);
+    }
 
- factorized_sum[i] = k;
+    factorized_sum[i] = k;
  }
 
 
  segment_tree<int> tree(n);
  for (int i = 0; i < n; ++i)
  {
- tree.update(1, i);
+    tree.update(1, i);
  }
 
  vector<int> result(n);
 
  for (int i = 0; i < n; ++i)
  {
- int s = get_statistic(tree, factorized_sum[i]+1, n);
- tree.update(-1, s);
+     int s = get_statistic(tree, factorized_sum[i]+1, n);
+     tree.update(-1, s);
 
- result[i] = s;
+     result[i] = s;
  }
 
  for (int i = 0; i < n; ++i)
  {
- printf("%d ", result[i]);
+     printf("%d ", result[i]);
  }
 
 } 
